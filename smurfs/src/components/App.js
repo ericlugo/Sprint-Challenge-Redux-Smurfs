@@ -1,17 +1,72 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSmurfs } from '../actions';
+import { addSmurf, getSmurfs } from '../actions';
 import './App.css';
 
+const initialState = {
+  input: {
+    age: '',
+    height: '',
+    name: '',
+  },
+};
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+  }
+
   componentDidMount() {
     this.props.getSmurfs();
   }
+
+  handleInput = (event) => {
+    event.preventDefault();
+    this.setState({
+      input: {
+        ...this.state.input,
+        [event.target.name]: event.target.value,
+      },
+    });
+  };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const newSmurf = { ...this.state.input };
+    this.props.addSmurf(newSmurf);
+    this.setState(initialState);
+  };
+
   render() {
-    console.log('THIS.PROPS.SMURFS: ', this.props.smurfs);
     return (
       <div className='App'>
         <h1>SMURFS! 2.0 W/ Redux</h1>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type='text'
+            name='name'
+            placeholder='name'
+            value={this.state.input.name}
+            onChange={this.handleInput}
+          />
+          <input
+            type='text'
+            name='age'
+            placeholder='age'
+            value={this.state.input.age}
+            onChange={this.handleInput}
+          />
+          <input
+            type='text'
+            name='height'
+            placeholder='height'
+            value={this.state.input.height}
+            onChange={this.handleInput}
+          />
+          <button type='submit' onClick={this.handleSubmit}>
+            Submit
+          </button>
+        </form>
         {this.props.smurfs.map((smurf) => (
           <div key={smurf.id}>
             <h1>Name: {smurf.name}</h1>
@@ -32,5 +87,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { getSmurfs },
+  { addSmurf, getSmurfs },
 )(App);
