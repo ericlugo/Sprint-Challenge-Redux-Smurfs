@@ -22,9 +22,21 @@ In this challenge, you are to build the Smurfs village once again, only this tim
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
+---
+
 - [ ] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
+
+Actions are bundles of information that detail the kind of change you want to occur in the state and, if necessary, the payload required to affect such a change. Reducers detail how the state changes based on the requested type of change and the payload received. Store is where the state information is kept. Store allows getting, updating, and listening to state information.
+
 - [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
+
+Application state is information which presides over the entire application. It is unidirectional in flow and usually is used when the information will affect various components and their interaction with one another. Component state is contained to the individual component level. It can be passed down to children which can then use it to affect changes on the parent elements. This is usually reserved for cases where the state information does not need to interact with any other components meaningfully. (e.g. a form's current state and it's updates do not need to be supplied to the entire application unless it is being submitted or otherwise immediately consumed.)
+
 - [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+
+Redux-thunk is a middleware that allows for the creation of asynchronous actions. This allow us to write actions creators that can return a function rather than a specific action. This means that you can put logic into whether an action ever dispatches and in what way that action is affected.
+
+---
 
 ## Project Set Up
 
@@ -180,3 +192,7 @@ output: [
   }
 ];
 ```
+
+---
+
+### This fork is maintained by: Eric SarragaLugo
